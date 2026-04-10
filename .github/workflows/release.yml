@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: windows-2022
+
+    env:
+      SOLUTION_FILE: NtWarden.sln
+      BUILD_CONFIGURATION: Release
+      BUILD_PLATFORM: x64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore $env:SOLUTION_FILE
+        shell: pwsh
+
+      - name: Setup vcpkg
+        shell: pwsh
+        run: |
+          $vcpkgRoot = Join-Path $env:RUNNER_TEMP "vcpkg"
+          git clone --depth 1 https://github.com/microsoft/vcpkg $vcpkgRoot
+          & (Join-Path $vcpkgRoot "bootstrap-vcpkg.bat") -disableMetrics
+          "VCPKG_ROOT=$vcpkgRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "VCPKG_INSTALLED_X64=$vcpkgRoot\\installed\\x64-windows-static" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          & (Join-Path $vcpkgRoot "vcpkg.exe") install --classic capstone:x64-windows-static nlohmann-json:x64-windows-static
+
+      - name: Build solution
+        shell: pwsh
+        run: >
+          msbuild $env:SOLUTION_FILE
+          /m
+          /p:Configuration=$env:BUILD_CONFIGURATION
+          /p:Platform=$env:BUILD_PLATFORM
+          /p:VCPKG_ROOT=$env:VCPKG_ROOT
+          /p:VcpkgInstalledX64=$env:VCPKG_INSTALLED_X64
+
+      - name: Package release artifacts
+        id: package
+        shell: pwsh
+        run: |
+          $version = Get-Date -Format "yyyy.MM.dd"
+          $shortSha = $env:GITHUB_SHA.Substring(0, 7)
+          $tag = "release-$version-$($env:GITHUB_RUN_NUMBER)-$shortSha"
+          $bundleRoot = Join-Path $env:RUNNER_TEMP "NtWarden-x64"
+          $releaseDir = Join-Path $env:GITHUB_WORKSPACE "x64\\Release"
+
+          New-Item -ItemType Directory -Force -Path $bundleRoot | Out-Null
+
+          Copy-Item (Join-Path $releaseDir "NtWarden.exe") $bundleRoot
+          Copy-Item (Join-Path $releaseDir "WinSysServer.exe") $bundleRoot
+          Copy-Item (Join-Path $releaseDir "KWinSys.sys") $bundleRoot
+          if (Test-Path (Join-Path $releaseDir "KWinSys.cer")) {
+            Copy-Item (Join-Path $releaseDir "KWinSys.cer") $bundleRoot
+          }
+          if (Test-Path (Join-Path $releaseDir "res")) {
+            Copy-Item (Join-Path $releaseDir "res") $bundleRoot -Recurse
+          }
+          Copy-Item (Join-Path $env:GITHUB_WORKSPACE "README.md") $bundleRoot
+
+          $bundleZip = Join-Path $env:RUNNER_TEMP "NtWarden-x64-$tag.zip"
+          if (Test-Path $bundleZip) { Remove-Item $bundleZip -Force }
+          Compress-Archive -Path (Join-Path $bundleRoot "*") -DestinationPath $bundleZip
+
+          "tag=$tag" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "bundle_zip=$bundleZip" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NtWarden-x64
+          path: ${{ steps.package.outputs.bundle_zip }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.package.outputs.tag }}
+          name: NtWarden ${{ steps.package.outputs.tag }}
+          generate_release_notes: true
+          files: |
+            ${{ steps.package.outputs.bundle_zip }}

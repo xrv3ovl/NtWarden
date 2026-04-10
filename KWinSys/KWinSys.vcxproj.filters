@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{E1F7EF3B-6E2E-43A5-BB89-E375D35FD032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inspection">
+      <UniqueIdentifier>{C9BC8A48-3F88-4FDE-91C0-774869A8AB42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Security">
+      <UniqueIdentifier>{B762B9A6-E557-4A24-9821-84BF2B6C62A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{7B9BCE44-D3A4-49D2-9E4E-7E4FC0ABBF9C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Driver Files">
+      <UniqueIdentifier>{8E41214B-6785-4CFE-B992-037D68949A14}</UniqueIdentifier>
+      <Extensions>inf;inv;inx;mof;mc;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{3F207095-16AE-4250-A6CC-A7652A082B0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inspection">
+      <UniqueIdentifier>{23048AB1-E115-4910-A268-DA14C76D6CCB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Security">
+      <UniqueIdentifier>{D425F8DA-CF8A-4657-AF1F-98A25E58531D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{592E3C46-42D4-4787-AD1B-02DBB3D3B034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shared">
+      <UniqueIdentifier>{B7F29AD6-6C55-43AF-95A5-F68AEF8931E5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Callbacks.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelRuntime.c">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="KWinSys.c">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.c">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Ssdt.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessObjects.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="Gdt.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="Idt.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="IrpDispatch.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectProc.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="IoTimerEnum.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelLog.c">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+
+    <ClCompile Include="Memory.c">
+      <Filter>Source Files\Inspection</Filter>
+    </ClCompile>
+
+    <ClCompile Include="Wfp.c">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="SecurityHandlers.c">
+      <Filter>Source Files\Security</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Callbacks.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelRuntime.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="KWinSys.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="KWinSysPublic.h">
+      <Filter>Header Files\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Ssdt.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessObjects.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="Gdt.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="Idt.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="IrpDispatch.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectProc.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="IoTimerEnum.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelLog.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+
+    <ClInclude Include="Memory.h">
+      <Filter>Header Files\Inspection</Filter>
+    </ClInclude>
+
+    <ClInclude Include="Wfp.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="SecurityHandlers.h">
+      <Filter>Header Files\Security</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

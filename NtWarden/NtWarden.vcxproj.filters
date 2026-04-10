@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{A1F9D5A8-4B77-4346-A74A-220E2D2F22C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{C98E8D77-BD7A-4DE0-BD8D-92D6316EA8BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Protocol">
+      <UniqueIdentifier>{F7A17146-E0F4-4C0C-9396-1B8E184493B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Remote">
+      <UniqueIdentifier>{AB7D62A2-4A67-4C6C-B4CC-0A074C9422D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Security">
+      <UniqueIdentifier>{A3ED08CE-F848-4AA3-B42E-EC46753D0DA0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Symbols">
+      <UniqueIdentifier>{80A2F0D1-3745-49D7-B25B-3B2B263AF13D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views">
+      <UniqueIdentifier>{292F6478-A259-4087-AF78-592EE922E626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Shared">
+      <UniqueIdentifier>{A5B5F4FA-A9D8-4C9B-AF4A-86B0A540C8C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\User Mode">
+      <UniqueIdentifier>{01A44211-303A-4C88-BA66-120E10462F4A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Views\Kernel Mode">
+      <UniqueIdentifier>{C86186C0-5D6F-4D6A-91CE-530F401D8C07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty">
+      <UniqueIdentifier>{A8F34A03-6545-4958-A2B8-C825FE34B861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty\ImGui">
+      <UniqueIdentifier>{DD366D17-5E9D-4C48-9AAA-E11AB0DA8107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{C788E5C7-BD4B-4828-8C7D-B61BB7483C3B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{EE5B21B0-E6BD-4A77-B3D7-0946EF2CB4B4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Protocol">
+      <UniqueIdentifier>{E6D474EA-E8DB-42A2-A27B-19EA0267A631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Remote">
+      <UniqueIdentifier>{214BB533-CB7D-4D22-BD17-D79E9641AD1E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Security">
+      <UniqueIdentifier>{D01E5651-CA0B-44D5-BDFD-D5371C1E8B06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Symbols">
+      <UniqueIdentifier>{BB225B54-661A-4A2B-9DBA-B170A7C3A67E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views">
+      <UniqueIdentifier>{66932A43-596B-4904-B525-69493CC33B1C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views\Shared">
+      <UniqueIdentifier>{AFA0D38B-D8AB-4963-902D-276AF40F7C06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views\User Mode">
+      <UniqueIdentifier>{56863D39-A6C6-4292-84FB-E5CB6EDAFD49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Views\Kernel Mode">
+      <UniqueIdentifier>{2EE5DEFA-13E7-43E0-B6B3-2D5B80308587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ThirdParty">
+      <UniqueIdentifier>{E8A3C6E8-945A-453B-8514-1A3CC143AC79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ThirdParty\ImGui">
+      <UniqueIdentifier>{9C5B4F50-11EE-44AB-83F4-6D2A2BC4399A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Icons">
+      <UniqueIdentifier>{4D3C2D80-4C18-46FD-B595-8F45E8CA0F35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_demo.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_tables.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_win32.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_draw.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="SortHelper.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TabManager.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FormatHelper.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessColor.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessProperties.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowProperties.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelOwl.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessInfoEx.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_dx11.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiExt.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverHelper.cpp">
+      <Filter>Source Files\Protocol</Filter>
+    </ClCompile>
+<ClCompile Include="SecurityHelper.cpp">
+      <Filter>Source Files\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_demo.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\implot_items.cpp">
+      <Filter>Source Files\ThirdParty\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelMemoryView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelHooksView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="UserHooksView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelTimersView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggerView.cpp">
+      <Filter>Source Files\Views\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="PerformanceView.cpp">
+      <Filter>Source Files\Views\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessesView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ServicesView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Callbacks.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+
+    <ClCompile Include="MiniFilterView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessObjectsView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulesView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ETWView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessSecurityView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="RootCertificatesView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="NdisView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManagerView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsVersionDetector.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteClient.cpp">
+      <Filter>Source Files\Remote</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolView.cpp">
+      <Filter>Source Files\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolHelper.cpp">
+      <Filter>Source Files\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="GdtIdtView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="IrpDispatchView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="WfpView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+
+    <ClCompile Include="DseStatusView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="CiPolicyView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelIntegrityView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="HypervisorHookView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="LolDriversDb.cpp">
+      <Filter>Source Files\Security</Filter>
+    </ClCompile>
+    <ClCompile Include="IPCView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="RegistryView.cpp">
+      <Filter>Source Files\Views\User Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryView.cpp">
+      <Filter>Source Files\Views\Kernel Mode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_win32.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelOwl.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessInfoEx.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBox.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiExt.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SortHelper.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TabManager.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FormatHelper.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessColor.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="colors.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessProperties.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowProperties.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_dx11.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverHelper.h">
+      <Filter>Header Files\Protocol</Filter>
+    </ClInclude>
+<ClInclude Include="SecurityHelper.h">
+      <Filter>Header Files\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Callbacks.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+
+    <ClInclude Include="imgui\implot.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\implot_internal.h">
+      <Filter>Header Files\ThirdParty\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelMemoryView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelHooksView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="UserHooksView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelTimersView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerView.h">
+      <Filter>Header Files\Views\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="PerformanceView.h">
+      <Filter>Header Files\Views\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessesView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ServicesView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniFilterView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessObjectsView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulesView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ETWView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessSecurityView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeSystem.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RootCertificatesView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="NdisView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManagerView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewBase.h">
+      <Filter>Header Files\Views\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="StructureModel.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StructureProvider.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsVersionDetector.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteClient.h">
+      <Filter>Header Files\Remote</Filter>
+    </ClInclude>
+    <ClInclude Include="WinSysProtocol.h">
+      <Filter>Header Files\Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolView.h">
+      <Filter>Header Files\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolHelper.h">
+      <Filter>Header Files\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="GdtIdtView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="IrpDispatchView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="WfpView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+
+    <ClInclude Include="DseStatusView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="CiPolicyView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelIntegrityView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="HypervisorHookView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="LolDriversDb.h">
+      <Filter>Header Files\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="IPCView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="RegistryView.h">
+      <Filter>Header Files\Views\User Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryView.h">
+      <Filter>Header Files\Views\Kernel Mode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="..\x64\Debug\KWinSys\KWinSys.sys" />
+    <None Include="res\*.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NtWarden.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="icon2.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="processes.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="ico\ntwarden.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\ntwarden_icon.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="res\owl_black_eyebrows2.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
