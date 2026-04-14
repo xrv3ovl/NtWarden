@@ -366,3 +366,6 @@ FodyWeavers.xsd
 
 # vcpkg installed packages (restored from vcpkg.json manifest)
 vcpkg_installed/
+
+# Docs
+docs/

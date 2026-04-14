@@ -115,7 +115,7 @@ namespace {
 			moduleBase = reinterpret_cast<DWORD64>(drivers[0]);
 		}
 
-		SymbolHelper symbols((HANDLE)0x5678);
+		SymbolHelper symbols;
 		if (!symbols.IsInitialized()) {
 			status = "Symbol engine init failed";
 			return false;
@@ -222,13 +222,13 @@ void RenderTable(const char* table_name, int num_rows, MODULE_INFO obcallbacks_i
 					}
 					ImGui::PopID();
 					ImGui::SameLine();
-					ImGui::Text(label2);
+					ImGui::Text("%s", label2);
 				}
 				if (ImGui::TableSetColumnIndex(1)) {
 					ImGui::Text("0x%llx", myob.addr);
 				}
 				if (ImGui::TableSetColumnIndex(2)) {
-					ImGui::Text(myob.name);
+					ImGui::Text("%s", myob.name);
 				}
 
 				if (ImGui::TableSetColumnIndex(3)) {
@@ -413,31 +413,33 @@ static std::vector<Callbacks::IntegrityEntry> g_integrityEntries;
 
 bool Callbacks::IsKnownEdrDriver(const std::string& name) {
 	static const char* edrDrivers[] = {
-		"WdFilter", "wdfilter",
-		"MBAMSwissArmy", "mbamswissarmy",
-		"aswSP", "aswsp",
-		"klif", "KLIF",
-		"epfw", "EPFW",
-		"SentinelMonitor", "sentinelmonitor",
-		"CrowdStrike", "crowdstrike", "csagent", "CSAgent",
-		"cbdefense", "CbDefense",
-		"TmFilter", "tmfilter",
-		"fltMgr", "fltmgr",
-		"ehdrv", "EHDRV",
-		"HuntressAgent", "huntressagent",
-		"SophosED", "sophosed",
-		"CylanceSvc", "cylancesvc",
-		"PGPwded", "pgpwded",
-		"sysmon", "Sysmon", "SysMon",
-		"eamonm", "EAMONM",
-		"ekrn", "EKRN",
-		"bdselfpr", "BDSELFPR",
-		"avfwot", "AVFWOT",
-		"klhk", "KLHK",
-		"klflt", "KLFLT",
+		"wdfilter",
+		"mbamswissarmy",
+		"aswsp",
+		"klif",
+		"epfw",
+		"sentinelmonitor",
+		"crowdstrike", "csagent",
+		"cbdefense",
+		"tmfilter",
+		"fltmgr",
+		"ehdrv",
+		"huntressagent",
+		"sophosed",
+		"cylancesvc",
+		"pgpwded",
+		"sysmon",
+		"eamonm",
+		"ekrn",
+		"bdselfpr",
+		"avfwot",
+		"klhk",
+		"klflt",
 	};
+	std::string lower = name;
+	std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
 	for (auto& edr : edrDrivers) {
-		if (name.find(edr) != std::string::npos)
+		if (lower.find(edr) != std::string::npos)
 			return true;
 	}
 	return false;

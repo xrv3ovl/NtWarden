@@ -112,8 +112,6 @@ static std::wstring NtPathToDosPath(const std::wstring& ntPath) {
 	return ntPath;
 }
 
-IWICImagingFactory* GetWIC() noexcept;
-
 namespace {
 	struct IconPixels {
 		UINT Width{ 0 };
@@ -146,7 +144,13 @@ namespace {
 		HRESULT initHr = ::CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 		const bool shouldUninit = SUCCEEDED(initHr);
 
-		auto spFactory = GetWIC();
+		CComPtr<IWICImagingFactory> spFactory;
+		if (FAILED(::CoCreateInstance(CLSID_WICImagingFactory2, nullptr, CLSCTX_INPROC_SERVER,
+			__uuidof(IWICImagingFactory2), reinterpret_cast<void**>(&spFactory))))
+		{
+			::CoCreateInstance(CLSID_WICImagingFactory1, nullptr, CLSCTX_INPROC_SERVER,
+				__uuidof(IWICImagingFactory), reinterpret_cast<void**>(&spFactory));
+		}
 		if (!spFactory) {
 			if (shouldUninit)
 				::CoUninitialize();
@@ -168,8 +172,13 @@ namespace {
 			}
 		}
 
-		if (hIcon == nullptr || hIcon == reinterpret_cast<HICON>(1))
+		if (hIcon == reinterpret_cast<HICON>(1)) {
+			::DestroyIcon(hIcon);
 			hIcon = hAppIcon;
+		}
+		else if (hIcon == nullptr) {
+			hIcon = hAppIcon;
+		}
 
 		if (!hIcon) {
 			if (shouldUninit)
@@ -321,70 +330,6 @@ const std::wstring& ProcessInfoEx::GetExecutablePath() const
 	return _executablePath;
 }
 
-namespace
-{
-	bool g_WIC2 = false;
-
-	BOOL WINAPI InitializeWICFactory(PINIT_ONCE, PVOID, PVOID* ifactory) noexcept
-	{
-#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8) || defined(_WIN7_PLATFORM_UPDATE)
-		HRESULT hr = CoCreateInstance(
-			CLSID_WICImagingFactory2,
-			nullptr,
-			CLSCTX_INPROC_SERVER,
-			__uuidof(IWICImagingFactory2),
-			ifactory
-		);
-
-		if (SUCCEEDED(hr))
-		{
-			// WIC2 is available on Windows 10, Windows 8.x, and Windows 7 SP1 with KB 2670838 installed
-			g_WIC2 = true;
-			return TRUE;
-		}
-		else
-		{
-			hr = CoCreateInstance(
-				CLSID_WICImagingFactory1,
-				nullptr,
-				CLSCTX_INPROC_SERVER,
-				__uuidof(IWICImagingFactory),
-				ifactory
-			);
-			return SUCCEEDED(hr) ? TRUE : FALSE;
-		}
-#else
-		return SUCCEEDED(CoCreateInstance(
-			CLSID_WICImagingFactory,
-			nullptr,
-			CLSCTX_INPROC_SERVER,
-			__uuidof(IWICImagingFactory),
-			ifactory)) ? TRUE : FALSE;
-#endif
-	}
-}
-
-bool IsWIC2() noexcept
-{
-	return g_WIC2;
-}
-
-IWICImagingFactory* GetWIC() noexcept
-{
-	static INIT_ONCE s_initOnce = INIT_ONCE_STATIC_INIT;
-
-	IWICImagingFactory* factory = nullptr;
-	if (!InitOnceExecuteOnce(
-		&s_initOnce,
-		InitializeWICFactory,
-		nullptr,
-		reinterpret_cast<LPVOID*>(&factory)))
-	{
-		return nullptr;
-	}
-	return factory;
-}
-
 // Shared icon cache: one texture per unique executable path
 extern ID3D11Device* g_pd3dDevice;
 
@@ -480,11 +425,16 @@ ID3D11ShaderResourceView* ProcessInfoEx::Icon(bool allowCreate) const
 	// If we have a cache key, try the shared cache
 	if (!cacheKey.empty()) {
 		std::shared_ptr<SharedIconEntry> entry;
+		SharedIconEntry::State finalState = SharedIconEntry::State::Loading;
 		{
 			std::lock_guard<std::mutex> lock(g_iconCacheMutex);
 			auto it = g_iconCache.find(cacheKey);
 			if (it != g_iconCache.end()) {
 				entry = it->second;
+				// Finalize under the lock so only one caller creates D3D resources
+				if (entry->LoadState == SharedIconEntry::State::Loading)
+					TryFinalizeIconEntry(*entry);
+				finalState = entry->LoadState;
 			}
 			else if (allowCreate) {
 				// First request for this path — create cache entry and start loading
@@ -506,16 +456,12 @@ ID3D11ShaderResourceView* ProcessInfoEx::Icon(bool allowCreate) const
 		}
 
 		if (entry) {
-			// We have a shared cache entry — check its state
-			if (entry->LoadState == SharedIconEntry::State::Loading)
-				TryFinalizeIconEntry(*entry);
-
-			if (entry->LoadState == SharedIconEntry::State::Ready) {
+			if (finalState == SharedIconEntry::State::Ready) {
 				m_spIcon = entry->SRV;
 				_iconState = IconLoadState::Ready;
 				return m_spIcon.p;
 			}
-			if (entry->LoadState == SharedIconEntry::State::Failed) {
+			if (finalState == SharedIconEntry::State::Failed) {
 				_iconState = IconLoadState::Failed;
 				return nullptr;
 			}

@@ -8,9 +8,11 @@
 #include <filesystem>
 #include <fstream>
 #include <winhttp.h>
+#include <setupapi.h>
 #pragma comment(lib, "dbghelp.lib")
 #pragma comment(lib, "diaguids.lib")
 #pragma comment(lib, "winhttp.lib")
+#pragma comment(lib, "setupapi.lib")
 
 namespace {
 	const wchar_t* SymTagToString(DWORD tag) {
@@ -473,11 +475,9 @@ std::wstring SymbolHelper::DownloadPdb(const std::wstring& peFilePath, const std
 	if (HttpDownloadFile(compressedUrl, compressedLocal)) {
 		auto fileSize = std::filesystem::file_size(compressedLocal, ec);
 		if (!ec && fileSize > 0) {
-			// Decompress using expand.exe
-			std::wstring expandCmd = L"expand \"" + compressedLocal + L"\" \"" + localFile + L"\"";
-			int ret = _wsystem(expandCmd.c_str());
+			DWORD decompResult = ::SetupDecompressOrCopyFileW(compressedLocal.c_str(), localFile.c_str(), nullptr);
 			std::filesystem::remove(compressedLocal, ec);
-			if (ret == 0 && GetFileAttributesW(localFile.c_str()) != INVALID_FILE_ATTRIBUTES) {
+			if (decompResult == ERROR_SUCCESS && ::GetFileAttributesW(localFile.c_str()) != INVALID_FILE_ATTRIBUTES) {
 				LoggerView::AddLog(LoggerView::UserModeLog, "PDB: Decompressed successfully");
 				return localFile;
 			}
@@ -540,10 +540,9 @@ std::wstring SymbolHelper::DownloadPdbBySignature(const GUID& pdbGuid, DWORD pdb
 	if (HttpDownloadFile(compressedUrl, compressedLocal)) {
 		auto fileSize = std::filesystem::file_size(compressedLocal, ec);
 		if (!ec && fileSize > 0) {
-			std::wstring expandCmd = L"expand \"" + compressedLocal + L"\" \"" + localFile + L"\"";
-			int ret = _wsystem(expandCmd.c_str());
+			DWORD decompResult = ::SetupDecompressOrCopyFileW(compressedLocal.c_str(), localFile.c_str(), nullptr);
 			std::filesystem::remove(compressedLocal, ec);
-			if (ret == 0 && GetFileAttributesW(localFile.c_str()) != INVALID_FILE_ATTRIBUTES) {
+			if (decompResult == ERROR_SUCCESS && ::GetFileAttributesW(localFile.c_str()) != INVALID_FILE_ATTRIBUTES) {
 				LoggerView::AddLog(LoggerView::UserModeLog, "PDB: Decompressed successfully");
 				return localFile;
 			}

@@ -62,14 +62,14 @@ namespace {
 		return {};
 	}
 
-	ID3D11ShaderResourceView* CreateTextureFromIconFile(std::wstring_view fileName) {
+	CComPtr<ID3D11ShaderResourceView> CreateTextureFromIconFile(std::wstring_view fileName) {
 		auto path = ResolveIconPath(fileName);
 		if (path.empty() || g_pd3dDevice == nullptr)
-			return nullptr;
+			return {};
 
 		auto* factory = GetWic();
 		if (!factory)
-			return nullptr;
+			return {};
 
 		auto hIcon = static_cast<HICON>(::LoadImage(
 			nullptr,
@@ -79,26 +79,26 @@ namespace {
 			16,
 			LR_LOADFROMFILE | LR_DEFAULTCOLOR));
 		if (!hIcon)
-			return nullptr;
+			return {};
 
 		CComPtr<IWICBitmap> bitmap;
 		auto hr = factory->CreateBitmapFromHICON(hIcon, &bitmap);
 		::DestroyIcon(hIcon);
 		if (FAILED(hr))
-			return nullptr;
+			return {};
 
 		UINT width = 0, height = 0;
 		if (FAILED(bitmap->GetSize(&width, &height)) || width == 0 || height == 0)
-			return nullptr;
+			return {};
 
 		CComPtr<IWICBitmapLock> lock;
 		if (FAILED(bitmap->Lock(nullptr, WICBitmapLockRead, &lock)))
-			return nullptr;
+			return {};
 
 		UINT bufferSize = 0;
 		WICInProcPointer data = nullptr;
 		if (FAILED(lock->GetDataPointer(&bufferSize, &data)) || data == nullptr)
-			return nullptr;
+			return {};
 
 		D3D11_TEXTURE2D_DESC desc{};
 		desc.Width = width;
@@ -116,7 +116,7 @@ namespace {
 
 		CComPtr<ID3D11Texture2D> texture;
 		if (FAILED(g_pd3dDevice->CreateTexture2D(&desc, &initData, &texture)))
-			return nullptr;
+			return {};
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 		srvDesc.Format = desc.Format;
@@ -125,10 +125,9 @@ namespace {
 
 		CComPtr<ID3D11ShaderResourceView> view;
 		if (FAILED(g_pd3dDevice->CreateShaderResourceView(texture, &srvDesc, &view)))
-			return nullptr;
+			return {};
 
-		view.p->AddRef();
-		return view.p;
+		return view;
 	}
 
 	class RegistryIconCache final {
@@ -165,13 +164,14 @@ namespace {
 		ID3D11ShaderResourceView* Load(std::wstring_view fileName) {
 			auto key = std::wstring(fileName);
 			if (auto it = _loaded.find(key); it != _loaded.end())
-				return it->second;
-			auto* view = CreateTextureFromIconFile(fileName);
-			_loaded.insert({ key, view });
-			return view;
+				return it->second.p;
+			auto view = CreateTextureFromIconFile(fileName);
+			auto* raw = view.p;
+			_loaded.insert({ key, std::move(view) });
+			return raw;
 		}
 
-		std::unordered_map<std::wstring, ID3D11ShaderResourceView*> _loaded;
+		std::unordered_map<std::wstring, CComPtr<ID3D11ShaderResourceView>> _loaded;
 	};
 
 	std::wstring ToLower(std::wstring_view text) {
