@@ -434,21 +434,18 @@ void ProcessProperties::RefreshHandles() {
 		_handleRefreshPending = false;
 		_lastHandleRefreshTick = ::GetTickCount64();
 	}
-	if (_handleRefreshPending)
-		return;
-	auto now = ::GetTickCount64();
-	if (_lastHandleRefreshTick != 0 && now - _lastHandleRefreshTick < 3000)
-		return;
-	_handleRefreshPending = true;
-	auto pid = _pi->Id;
-	_handleFuture = std::async(std::launch::async, EnumHandlesAsync, pid);
 }
 
 void ProcessProperties::ForceRefreshHandles() {
-	_lastHandleRefreshTick = 0;
-	_handles.clear();
-	_handleRefreshPending = false;
 	RefreshHandles();
+	if (_handleRefreshPending)
+		return;
+
+	_handles.clear();
+	_handleRefreshPending = true;
+	_lastHandleRefreshTick = 0;
+	auto pid = _pi->Id;
+	_handleFuture = std::async(std::launch::async, EnumHandlesAsync, pid);
 }
 
 const std::vector<ProcessProperties::HandleEntry>& ProcessProperties::GetHandles() const {
@@ -458,4 +455,3 @@ const std::vector<ProcessProperties::HandleEntry>& ProcessProperties::GetHandles
 bool ProcessProperties::IsHandleRefreshPending() const {
 	return _handleRefreshPending;
 }
-

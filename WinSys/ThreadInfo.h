@@ -77,7 +77,7 @@ namespace WinSys {
 		uint32_t ContextSwitches;
 		ThreadState ThreadState;
 		WaitReason WaitReason;
-		int32_t CPU;
+		float CPU;
 		void* StartAddress;
 		void* StackBase, *StackLimit;
 		void* Win32StartAddress;

@@ -612,7 +612,7 @@ void ProcessesView::BuildTable() {
 				Text("%u", p->SessionId);
 
 				TableSetColumnIndex(4);
-				Text("%d", p->CPU);
+				Text("%.1f", p->CPU);
 
 				TableSetColumnIndex(5);
 				Text("%u", p->ParentId);
@@ -928,8 +928,8 @@ void ProcessesView::BuildPropertiesWindow(ProcessProperties* props) {
 					Row("Page Faults", "%s", FormatHelper::FormatWithCommas(pi->PageFaultCount).GetString());
 					Row("Hard Faults", "%s", FormatHelper::FormatWithCommas(pi->HardFaultCount).GetString());
 					Separator();
-					Row("CPU Time (User)", "%s", FormatHelper::TimeSpanToString(pi->UserTime).GetString());
-					Row("CPU Time (Kernel)", "%s", FormatHelper::TimeSpanToString(pi->KernelTime).GetString());
+					Row("CPU Time (User)", "%ws", FormatHelper::TimeSpanToString(pi->UserTime).GetString());
+					Row("CPU Time (Kernel)", "%ws", FormatHelper::TimeSpanToString(pi->KernelTime).GetString());
 
 					EndTable();
 				}
@@ -1073,6 +1073,10 @@ void ProcessesView::BuildPropertiesWindow(ProcessProperties* props) {
 
 // ---- Handles tab ----
 			if (BeginTabItem("Handles")) {
+				if (Button("Refresh Handles##ProcessPropertiesHandles")) {
+					props->ForceRefreshHandles();
+				}
+				SameLine();
 				if (props->IsHandleRefreshPending()) {
 					TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Enumerating handles...");
 				}
