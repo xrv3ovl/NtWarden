@@ -186,7 +186,7 @@ typedef struct {
 	uint64_t PeakNonPagedPoolUsage;
 	uint64_t PagefileUsage;
 	uint64_t PeakPagefileUsage;
-	int32_t CPU;
+	float CPU;
 	int32_t BasePriority;
 	uint32_t PageFaultCount;
 	uint32_t HardFaultCount;

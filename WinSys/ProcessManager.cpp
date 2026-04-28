@@ -30,10 +30,12 @@ struct ProcessManager::Impl {
 	ThreadMap _threadsByKey;
 
 	LARGE_INTEGER _prevTicks{};
+	LARGE_INTEGER _perfFrequency{};
 	static uint32_t _totalProcessors;
 	static bool _isElevated;
 
 	Impl() {
+		::QueryPerformanceFrequency(&_perfFrequency);
 		if (_totalProcessors == 0) {
 			_totalProcessors = ::GetActiveProcessorCount(ALL_PROCESSOR_GROUPS);
 			_isElevated = Process::OpenById(::GetCurrentProcessId())->IsElevated();
@@ -43,6 +45,7 @@ struct ProcessManager::Impl {
 	size_t EnumProcesses(bool includeThreads, uint32_t pid, size_t extraProcessBytes, size_t extraThreadBytes);
 	std::shared_ptr<ProcessInfo> BuildProcessInfo(const SYSTEM_PROCESS_INFORMATION* info, bool includeThreads, ThreadMap
 		& threadsByKey, int64_t delta, std::shared_ptr<ProcessInfo> pi,	size_t extraBytesProcess, size_t extraBytesThread, bool extended);
+	float CalculateCpuUsage(int64_t currentKernelTime, int64_t currentUserTime, int64_t previousKernelTime, int64_t previousUserTime, int64_t elapsedTicks) const;
 	std::vector<std::shared_ptr<ProcessInfo>>& GetProcesses() {
 		return _processes;
 	}
@@ -227,7 +230,7 @@ size_t ProcessManager::Impl::EnumProcesses(bool includeThreads, uint32_t pid, si
 				}
 				else {
 					auto& pi2 = it->second;
-					auto cpu = delta == 0 ? 0 : (int32_t)((p->KernelTime.QuadPart + p->UserTime.QuadPart - pi2->UserTime - pi2->KernelTime) * 1000000 / delta / _totalProcessors);
+					auto cpu = CalculateCpuUsage(p->KernelTime.QuadPart, p->UserTime.QuadPart, pi2->KernelTime, pi2->UserTime, delta);
 					pi = BuildProcessInfo(p, includeThreads, threadsByKey, delta, pi2, extraBytesProcess, extraBytesThread, extended);
 					pi->CPU = cpu;
 
@@ -270,6 +273,27 @@ size_t ProcessManager::Impl::EnumProcesses(bool includeThreads, uint32_t pid, si
 	_prevTicks = ticks;
 
 	return static_cast<uint32_t>(_processes.size());
+}
+
+float ProcessManager::Impl::CalculateCpuUsage(int64_t currentKernelTime, int64_t currentUserTime,
+	int64_t previousKernelTime, int64_t previousUserTime, int64_t elapsedTicks) const {
+	if (elapsedTicks <= 0 || _perfFrequency.QuadPart <= 0 || _totalProcessors == 0)
+		return 0.0f;
+
+	auto cpuTimeDelta = (currentKernelTime + currentUserTime) - (previousKernelTime + previousUserTime);
+	if (cpuTimeDelta <= 0)
+		return 0.0f;
+
+	auto elapsed100ns = static_cast<double>(elapsedTicks) * 10000000.0 / static_cast<double>(_perfFrequency.QuadPart);
+	if (elapsed100ns <= 0.0)
+		return 0.0f;
+
+	auto cpu = (static_cast<double>(cpuTimeDelta) * 100.0) / elapsed100ns / static_cast<double>(_totalProcessors);
+	if (cpu < 0.0)
+		return 0.0f;
+	if (cpu > 100.0)
+		return 100.0f;
+	return static_cast<float>(cpu);
 }
 
 #ifdef __cplusplus
@@ -396,7 +420,7 @@ std::shared_ptr<ProcessInfo> ProcessManager::Impl::BuildProcessInfo(
 				_newThreads.push_back(thread);
 			}
 			else {
-				thread->CPU = delta == 0 ? 0 : (int32_t)((thread->KernelTime + thread->UserTime - cpuTime) * 1000000LL / delta / _totalProcessors);
+				thread->CPU = CalculateCpuUsage(thread->KernelTime, thread->UserTime, 0, cpuTime, delta);
 				_threadsByKey.erase(thread->Key);
 			}
 			threadsByKey.insert(std::make_pair(thread->Key, thread));

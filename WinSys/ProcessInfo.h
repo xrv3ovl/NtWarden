@@ -50,7 +50,7 @@ namespace WinSys {
 		int64_t OtherTransferCount;
 		uint64_t CycleTime; // since WIN7
 		int64_t WorkingSetPrivateSize; // since VISTA
-		int32_t CPU;
+		float CPU;
 		uint32_t JobObjectId;
 		BYTE UserSid[SECURITY_MAX_SID_SIZE];
 
